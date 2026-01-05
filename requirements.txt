@@ -1,0 +1,14 @@
+# Backend Requirements (Python Flask)
+# To install backend: cd backend && pip install -r requirements.txt
+
+# Desktop GUI Requirements (Python Tkinter - built-in, no installation needed)
+# The desktop version uses tkinter which comes with Python by default
+
+# Optional: PyQt5 for better GUI
+# PyQt5==5.15.9
+
+# Firebase Admin SDK (if needed for server-side Firebase access)
+# firebase-admin==6.3.0
+
+# For development
+python-dotenv==1.0.0
