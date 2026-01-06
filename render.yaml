@@ -1,0 +1,9 @@
+services:
+  - type: web
+    name: snake-battle
+    env: python
+    buildCommand: ./render-build.sh
+    startCommand: gunicorn -k eventlet -w 1 --chdir backend app:app
+    envVars:
+      - key: PYTHON_VERSION
+        value: 3.10.0

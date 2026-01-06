@@ -5,10 +5,19 @@ import random
 import string
 import os
 
-app = Flask(__name__)
+# Serve React App
+app = Flask(__name__, static_folder='../dist', static_url_path='')
 app.config['SECRET_KEY'] = os.getenv('SECRET_KEY', 'snake-battle-secret')
 CORS(app, resources={r"/*": {"origins": "*"}})
-socketio = SocketIO(app, cors_allowed_origins="*")
+socketio = SocketIO(app, cors_allowed_origins="*", async_mode='eventlet')
+
+@app.route('/')
+def index():
+    return app.send_static_file('index.html')
+
+@app.errorhandler(404)
+def not_found(e):
+    return app.send_static_file('index.html')
 
 # In-memory storage for rooms and players
 # Structure:
@@ -29,10 +38,6 @@ def generate_room_code():
         code = ''.join(random.choices(string.ascii_uppercase + string.digits, k=6))
         if code not in rooms:
             return code
-
-@app.route('/')
-def index():
-    return "Snake Battle Backend Running"
 
 # --- Mock API Endpoints for Offline/Guest Support ---
 @app.route('/api/players', methods=['POST'])
